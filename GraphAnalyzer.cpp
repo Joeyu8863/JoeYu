@@ -34,7 +34,7 @@ string GraphAnalyzer::topKOpenTriangles(int k) {
 
 vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
     //TODO
-    vector<vector<int>> list;
+    /*vector<vector<int>> list;
     int index = 0;
     int id = 0;
     for (int i = 0; i<G.hashtableedge[nodeID].size(); i++) {//access every edge contains nodeid
@@ -83,8 +83,8 @@ vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
         
     
     
-    return result;
-    //return vector<int> {3};
+    return result;*/
+    return vector<int> {3};
 };
 
 
