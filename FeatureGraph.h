@@ -33,9 +33,7 @@ public:
     vector<Node*> hashtable;
     vector<vector<Edge*>> hashtableedge;
     
-    
     FeatureGraph(int N, int d, vector<Node> nodes, vector<Edge> edges);
-
 
     //Insert node with given ID and feature vectors
     void insert(Node node);
@@ -43,11 +41,6 @@ public:
     // insert given edge
     // May assume nodes in edge are already present
     void insert(Edge edge);
-    
-    void nodehashing();
-    void edgeshashing();
-
-
 };  
 
 #endif

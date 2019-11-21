@@ -9,19 +9,19 @@ using namespace std;
 
 FeatureGraph::FeatureGraph(int N, int d, vector<Node> nodes, vector<Edge> edges) {
     //TODO
-    nnode=N;
-    sizenode=d;
-    for (int i = 0; i < nnode; i++) {
+    for (int i = 0; i < N; i++) {
         insert(nodes[i]);
     }
-    for (int j = 0 ; j<sizenode; j++) {
+    cout<<"Nodes inserted\n";
+    for (int j = 0 ; j < d; j++) {
         insert(edges[j]);
     }
+    cout<<"Edges inserted\n";
 };
 
 void FeatureGraph::insert(Node node){
     //TODO
-    Node* temp= new Node(node);
+    Node* temp = new Node(node);
     int i = node.id;
     hashtable.resize(hashtable.size()+i);
     hashtable[i] = temp;
@@ -35,18 +35,15 @@ void FeatureGraph::insert(Edge edge){
     Edge* temp = new Edge(edge);
     int i = edge.IdA;
     int j = edge.IdB;
-    int size = i;
-    if(j > i) size = j;
+    int size = i+j;
     hashtableedge.resize(hashtableedge.size()+size);
-    hashtableedge[i].resize(hashtableedge[i].size()+j);
-    hashtableedge[j].resize(hashtableedge[j].size()+i);
+    hashtableedge[i].resize(hashtableedge[i].size()+size);
+    hashtableedge[j].resize(hashtableedge[j].size()+size);
     hashtableedge[i][j] = temp;
     hashtableedge[j][i] = temp;
     //test cout
-    cout<<"Inserted to "<<i<<" "<<j<<"\n";
+    cout<<"Inserted Edge to "<<i<<" "<<j<<"\n";
     return;
-    
-    
 };
 
 
