@@ -1,7 +1,7 @@
 #include "GraphHelper.h"
 #include "FeatureGraph.h"
 #include "GraphAnalyzer.h"
-
+#include <iostream>
 using namespace std;
 
 
@@ -34,57 +34,69 @@ string GraphAnalyzer::topKOpenTriangles(int k) {
 
 vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
     //TODO
-    /*vector<vector<int>> list;
+    vector<int> listid;
+    vector<float> listscore;
+    listid.resize(k);
+    listscore.resize(k);
     int index = 0;
     int id = 0;
     for (int i = 0; i<G.hashtableedge[nodeID].size(); i++) {//access every edge contains nodeid
+       //
+        id=0;
+        if (G.hashtableedge[nodeID][i] != nullptr){
         if (G.hashtableedge[nodeID][i]->IdA == nodeID) {// if ida in the edge is nodeid, then idb is the search target
             //question would empty G.hashtableedge[nodeID][i] break this line?
             id = G.hashtableedge[nodeID][i]->IdB;
+            cout<<G.hashtableedge[nodeID][i]->IdB<<"\n";
         }
         else if (G.hashtableedge[nodeID][i]->IdB == nodeID){// if idb in the edge is nodeid, then idb is the search target
             id = G.hashtableedge[nodeID][i]->IdA;
+            cout<<G.hashtableedge[nodeID][i]->IdA<<"\n";
             
             }
-    
-            int score = 0;//initial score
-            for (int j = 0; j<G.hashtable[id]->features.size(); j++) { // compute the score of neighbor id
+         
+            float score = 0;//initial score
+            for (int j = 0; j<G.sizeskill; j++) { // compute the score of neighbor id
                 score += w[j]*G.hashtable[id]->features[j];
             }
-            if (list.size()<k && score!=0) {// if the list have less than k items just add it
-                list[index][0]= G.hashtable[i]->id;
-                list[index][1]= score;
+            if (listscore.size()<k && score!=0) {// if the list have less than k items just add it
+                listid[index]=i;
+                listscore[index]= score;
                 //then sort it
-                sortlist(index+1, list);
+                cout<<"1111";
+                sortlist(index+1, listid,listscore);
+                index++;
             }
-            else// if list have k items, replace the smallest one
+            else if(score!=0 &&score > listscore[k-1])// if list have k items, replace the smallest one
             {
-                
-                
-                    if (score > list[k-1][1]) {
-                        list[index][0]= G.hashtable[i]->id;
-                        list[index][1]= score;
-                    }
-                sortlist(k, list); // sort list
+                                            
+                listid[index]=G.hashtable[i]->id;
+                listscore[index]= score;
+                sortlist(k, listid,listscore); // sort list
+                index++;
                 
             }
-            
         }
+        
+        
+    }
     vector<int> result;
+    
     int size = 0;
-    if (k>index+1) { // take the min of k & neighbors
-        size = index +1;
+    if (k>index) { // take the min of k & neighbors
+        size = index;
     }
     else
         size = k;
+    result.resize(size);
     for (int l = 0; l < size ; l++) { //move ordered id to vector result and return
-        result[l]=list[l][1];
+        result[l]=listid[l];
     }
         
     
     
-    return result;*/
-    return vector<int> {3};
+    return result;
+    //return vector<int> {3};
 };
 
 
@@ -98,25 +110,20 @@ float GraphAnalyzer::jacardIndexOfTopKNeighborhoods(int nodeAID, int nodeBiID, i
     //TODO
     return 0;
 };
-void GraphAnalyzer::sortlist(int k, vector<vector<int>> list){
+void GraphAnalyzer::sortlist(int k, vector<int>&listid,vector<float> &listscore){ 
     for (int i = 0; i < k; i++) {
-        for (int j = 1; j < k; j++) {
-            if (list[i][1]<list[j][1]) {
-                int idtemp = list[i][0];
-                int scoretemp = list[i][1];
-                list[i][0] = list[j][0];
-                list[i][1] = list[j][1];
-                list[j][0] = idtemp;
-                list[j][1] = scoretemp;
+        for (int j = i; j < k; j++) {
+            if (listscore[i]<listscore[j]) {
+                int idtemp = listid[i];
+                float scoretemp = listscore[i];
+                listid[i] = listid[j];
+                listscore[i] = listscore[j];
+                listid[j] = idtemp;
+                listscore[j] = scoretemp;
             }
         }
         
     }
-    return;
-    
 };
-
-
-
 
 
