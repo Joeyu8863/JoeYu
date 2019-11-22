@@ -45,7 +45,6 @@ vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
         id=0;
         if (G.hashtableedge[nodeID][i] != nullptr){
         if (G.hashtableedge[nodeID][i]->IdA == nodeID) {// if ida in the edge is nodeid, then idb is the search target
-            //question would empty G.hashtableedge[nodeID][i] break this line?
             id = G.hashtableedge[nodeID][i]->IdB;
             cout<<G.hashtableedge[nodeID][i]->IdB<<"\n";
         }
@@ -59,19 +58,18 @@ vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
             for (int j = 0; j<G.sizeskill; j++) { // compute the score of neighbor id
                 score += w[j]*G.hashtable[id]->features[j];
             }
-            if (listscore.size()<k && score!=0) {// if the list have less than k items just add it
+            if (index<k && score!=0) {// if the list have less than k items just add it
                 listid[index]=i;
                 listscore[index]= score;
                 //then sort it
-                cout<<"1111";
                 sortlist(index+1, listid,listscore);
                 index++;
             }
             else if(score!=0 &&score > listscore[k-1])// if list have k items, replace the smallest one
             {
                                             
-                listid[index]=G.hashtable[i]->id;
-                listscore[index]= score;
+                listid[k-1]=i;//G.hashtable[i]->id;
+                listscore[k-1]= score;
                 sortlist(k, listid,listscore); // sort list
                 index++;
                 
@@ -85,6 +83,7 @@ vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
     int size = 0;
     if (k>index) { // take the min of k & neighbors
         size = index;
+        cout<<"This node only have "<< index<<" neighbors"<<"\n";
     }
     else
         size = k;
@@ -125,5 +124,7 @@ void GraphAnalyzer::sortlist(int k, vector<int>&listid,vector<float> &listscore)
         
     }
 };
+
+
 
 
