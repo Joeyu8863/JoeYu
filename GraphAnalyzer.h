@@ -61,7 +61,7 @@ public:
     // k: number of neighbors to evaluate for each node
     // w: weight vector
     float jacardIndexOfTopKNeighborhoods(int nodeAID, int nodeBID, int k, vector<float> w);
-    void sortlist(int k, vector<vector<int>> list);
+    void sortlist(int k, vector<int>&listid,vector<float> &listscore);
 
 };
 
