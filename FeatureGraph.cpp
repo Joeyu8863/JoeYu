@@ -23,7 +23,7 @@ void FeatureGraph::insert(Node node){
     //TODO
     Node* temp = new Node(node);
     int i = node.id;
-    hashtable.resize(hashtable.size()+i);
+    hashtable.resize(hashtable.size()+i+1);
     hashtable[i] = temp;
     //test cout
     cout<<"Inserted Node to "<<node.id<<"\n";
@@ -36,9 +36,9 @@ void FeatureGraph::insert(Edge edge){
     int i = edge.IdA;
     int j = edge.IdB;
     int size = i+j;
-    hashtableedge.resize(hashtableedge.size()+size);
-    hashtableedge[i].resize(hashtableedge[i].size()+size);
-    hashtableedge[j].resize(hashtableedge[j].size()+size);
+    hashtableedge.resize(hashtableedge.size()+size+1);
+    hashtableedge[i].resize(hashtableedge[i].size()+size+1);
+    hashtableedge[j].resize(hashtableedge[j].size()+size+1);
     hashtableedge[i][j] = temp;
     hashtableedge[j][i] = temp;
     //test cout
