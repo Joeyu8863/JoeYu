@@ -23,7 +23,52 @@ int GraphAnalyzer::diameter() {
 
 float GraphAnalyzer::openClosedTriangleRatio() {
     //TODO
-    return .5;
+    open =0.0;
+    close=0.0;
+    int index = 0;
+    int size = G.nnode;
+    vector<Triangle> trilist;
+    trilist.resize(size*(size-1)*(size-1));
+    for (int i=0 ; i<G.hashtable.size(); i++) {
+        for (int j = 0; j < G.hashtableedge[i].size(); j++) {
+             if (G.hashtableedge[i][j] != nullptr)
+             {
+                 int weight = G.hashtableedge[i][j]->weight;
+                 for (int k = 0; k < G.hashtableedge[j].size(); k++) {
+                     if (G.hashtableedge[j][k] != nullptr && k != i)
+                     {
+
+                         bool add = true;
+                         weight += G.hashtableedge[j][k]->weight;
+                         for (int l = 0; l < G.hashtableedge[k].size(); l++) {
+                             
+                             if (G.hashtableedge[k][l] != nullptr && l != j) {
+                         if ((G.hashtableedge[k][l]->IdA == i ||G.hashtableedge[k][l]->IdB == i) && !triangleexist(i, j, k, trilist)) {
+                             close += 1.0;
+                             add = false;
+                             weight +=G.hashtableedge[k][l]->weight;
+                             Triangle *temp = new Triangle(i,j,k,weight);
+                             trilist[index]=*temp;
+                             index++;
+                            
+                         }
+                             }}
+                         if(add && !triangleexist(i, j, k,trilist)){
+                             open += 1.0;
+                             Triangle *temp = new Triangle(i,j,k,weight);
+                             trilist[index]=*temp;
+                             index++;
+                             openlist.emplace(*temp);
+
+                             }
+                 }
+          
+             }
+        }
+        
+    }
+    }
+    return float(open/(close));
 };
 
 string GraphAnalyzer::topKOpenTriangles(int k) {
