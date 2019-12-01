@@ -27,7 +27,17 @@ class Triangle {
 public:
 
     // TODO make appropriate constuctor
-    Triangle() { }
+       Triangle(){id1=0;id2=0;id3=0;weight=0;}
+    Triangle(int i,int j,int k,int w){
+        id1 = i;
+        id2 = j;
+        id3 = k;
+        weight = w;
+        
+    }
+    int id1,id2,id3;
+   
+    int weight;
     
     // Operator overloading for storage in priority queue
     // returns true iff t2 is greater than t1. 
