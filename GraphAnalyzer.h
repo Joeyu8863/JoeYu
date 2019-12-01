@@ -20,6 +20,9 @@ public:
 	// 
 	// G: FeatureGraph to build on
     GraphAnalyzer(FeatureGraph& G): G(G) {};
+    priority_queue<Triangle> openlist;
+    float open;
+    float close;
 
 
     // Insert given node and corresponding features into graph
@@ -62,6 +65,7 @@ public:
     // w: weight vector
     float jacardIndexOfTopKNeighborhoods(int nodeAID, int nodeBID, int k, vector<float> w);
     void sortlist(int k, vector<int>&listid,vector<float> &listscore);
+    bool triangleexist(int i, int  j, int k, vector<Triangle> trilist);
 
 };
 
