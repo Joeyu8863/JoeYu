@@ -73,7 +73,19 @@ float GraphAnalyzer::openClosedTriangleRatio() {
 
 string GraphAnalyzer::topKOpenTriangles(int k) {
     //TODO
-    return "2,3,4";
+     string list= "";
+    for (int i =0; i<k; i++) {
+        list += (char)(i+1);
+        list += " open triangle is: ";
+        list += (char)openlist.top().id1;
+        list += " ";
+        list += (char)openlist.top().id2;
+        list += " ";
+        list += (char)openlist.top().id3;
+        list += "\n";
+        openlist.pop();
+    }
+    return list;
 };
 
 
