@@ -169,6 +169,30 @@ void GraphAnalyzer::sortlist(int k, vector<int>&listid,vector<float> &listscore)
         
     }
 };
+bool GraphAnalyzer::triangleexist(int i, int  j, int k, vector<Triangle> trilist){ 
+    
+    for (int z = 0; z < trilist.size(); z++) {
+        if (trilist[z].id1 == i && trilist[z].id2 ==j && trilist[z].id3 ==k) {
+            return true;
+        }
+        else if (trilist[z].id1 == i && trilist[z].id3 ==j && trilist[z].id2 ==k){
+            return true;
+        }
+        else if (trilist[z].id2 == i && trilist[z].id1 ==j && trilist[z].id3 ==k){
+            return true;
+        }
+        else if (trilist[z].id2 == i && trilist[z].id3 ==j && trilist[z].id1 ==k){
+            return true;
+        }
+        else if (trilist[z].id3 == i && trilist[z].id2 ==j && trilist[z].id1 ==k){
+            return true;
+        }
+        else if (trilist[z].id3 == i && trilist[z].id1 ==j && trilist[z].id2 ==k){
+            return true;
+        }
+    }
+    return false;
+};
 
 
 
