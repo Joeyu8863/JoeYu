@@ -1,5 +1,3 @@
-#include "GraphHelper.h"
-#include "FeatureGraph.h"
 #include "GraphAnalyzer.h"
 #include <iostream>
 using namespace std;
@@ -112,7 +110,7 @@ vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
             }
          
             float score = 0;//initial score
-            for (int j = 0; j<G.sizeskill; j++) { // compute the score of neighbor id
+            for (int j = 0; j<2; j++) { // compute the score of neighbor id
                 score += w[j]*G.hashtable[id]->features[j];
             }
             if (index<k && score!=0) {// if the list have less than k items just add it

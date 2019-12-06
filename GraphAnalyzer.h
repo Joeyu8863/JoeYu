@@ -2,8 +2,8 @@
 #define ANALYZER_H
 
 #include "FeatureGraph.h"
-
-
+#include "GraphHelper.h"
+#include <queue>
 using namespace std;
 
 
@@ -66,6 +66,7 @@ public:
     float jacardIndexOfTopKNeighborhoods(int nodeAID, int nodeBID, int k, vector<float> w);
     void sortlist(int k, vector<int>&listid,vector<float> &listscore);
     bool triangleexist(int i, int  j, int k, vector<Triangle> trilist);
+
 
 };
 

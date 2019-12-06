@@ -2,6 +2,7 @@
 #define HELPER_H
 
 #include <vector>
+#include <queue>
 using namespace std;
 
 struct Node {
@@ -23,11 +24,10 @@ struct Edge {
 
 class Triangle {
     // TODO make a Triangle class with appropriate fields and methods
-
 public:
 
-    // TODO make appropriate constuctor
-       Triangle(){id1=0;id2=0;id3=0;weight=0;}
+// TODO make appropriate constuctor
+    Triangle(){id1=0;id2=0;id3=0;weight=0;}
     Triangle(int i,int j,int k,int w){
         id1 = i;
         id2 = j;
@@ -35,22 +35,15 @@ public:
         weight = w;
         
     }
+    
     int id1,id2,id3;
    
     int weight;
-    
-    // Operator overloading for storage in priority queue
-    // returns true iff t2 is greater than t1. 
-    //
-    // Note: Must be transitive
-    //      This means if t1<t2 and t2<t3 than t1< t3
-    bool operator < (Triangle const &other) {
-        //TODO
-        return true;
-    }  
 
 };
-
+inline bool operator <(const Triangle& other, const Triangle& other2){
+    return false;
+}
 
 #endif
 
