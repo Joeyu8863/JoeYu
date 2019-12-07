@@ -42,8 +42,9 @@ public:
 
 };
 inline bool operator <(const Triangle& other, const Triangle& other2){
+    if(other.weight<other2.weight) return true;
     return false;
-}
+};
 
 #endif
 
