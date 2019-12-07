@@ -38,7 +38,12 @@ public:
     
     int id1,id2,id3;
    
-    int weight;
+    int weight ;
+    
+    bool operator <(const Triangle& other){
+      if(this->weight<other.weight) return true;
+      return false;
+    }
 
 };
 inline bool operator <(const Triangle& other, const Triangle& other2){
