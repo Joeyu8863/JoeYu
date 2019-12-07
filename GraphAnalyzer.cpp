@@ -115,7 +115,6 @@ string GraphAnalyzer::topKOpenTriangles(int k) {
 
 
 vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
-    //TODO
     vector<int> listid;
     vector<float> listscore;
     listid.resize(k);
@@ -196,10 +195,20 @@ int GraphAnalyzer::topNonNeighbor(int nodeID, vector<float> w) {
 };
 
 
-float GraphAnalyzer::jacardIndexOfTopKNeighborhoods(int nodeAID, int nodeBiID, int k, vector<float> w) {
-    //TODO
-    return 0;
+float GraphAnalyzer::jacardIndexOfTopKNeighborhoods(int nodeAID, int nodeBID, int k, vector<float> w) {
+    vector<int> neighborsA = topKNeighbors(nodeAID, k, w);
+    vector<int> neighborsB = topKNeighbors(nodeBID, k, w);
+    float jindex = 0.0;
+    vector<int> intersect;
+    for(int i = 0; i < neighborsA.size(); i++){
+      for(int j = 0; j < neighborsB.size(); j++){
+        if(neighborsA[i]==neighborsB[j]) intersect.emplace_back(neighborsA[i]);
+      }
+    }
+    jindex = intersect.size()/(neighborsA.size()+neighborsB.size()-intersect.size());
+    return jindex;
 };
+
 void GraphAnalyzer::sortlist(int k, vector<int>&listid,vector<float> &listscore){ 
     for (int i = 0; i < k; i++) {
         for (int j = i; j < k; j++) {
@@ -215,6 +224,7 @@ void GraphAnalyzer::sortlist(int k, vector<int>&listid,vector<float> &listscore)
         
     }
 };
+
 bool GraphAnalyzer::triangleexist(int i, int  j, int k, vector<Triangle> trilist){ 
     
     for (int z = 0; z < trilist.size(); z++) {
@@ -239,7 +249,3 @@ bool GraphAnalyzer::triangleexist(int i, int  j, int k, vector<Triangle> trilist
     }
     return false;
 };
-
-
-
-
