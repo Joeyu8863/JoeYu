@@ -44,7 +44,114 @@ void GraphAnalyzer::insert(Edge e) {
 
 int GraphAnalyzer::diameter() {
     //TODO return the sum of the edge weights of the minimum spanning tree for the graph
-    return 2;
+       vector<int> dis;
+    vector<int> q;
+    int result;
+    dis.resize(G.hashtable.size()+1);
+    bool check[G.hashtable.size()];
+    for (int i = 0 ; i < G.hashtable.size(); i++) {
+        if (G.hashtable[i]!=nullptr)
+        {
+            q.push_back(G.hashtable[i]->id);
+            check[G.hashtable[i]->id] = false;
+        }
+    }
+    for (int i = q[0]; i < q.size(); i++) {//set distance to infinity
+        dis[q[i]] = 2147483647;
+    }
+    vector<int> visited;
+    int j = 0;
+    int index2 = 0;
+    
+    while (!q.empty()) {
+        bool newneighbor = false;
+        if (index2 == 0) {// only for first run
+        dis[q[0]] = 0;
+        visited.push_back(q[0]);
+        j = q[0];
+        q.erase(q.begin());
+        index2++;
+        }
+        else{// add missing node
+            bool findconnectednode = false;
+            int target = 0;
+            int u = q[0+target];
+            do{
+                u = q[0+target];
+            for (int m = 0; m < visited.size(); m++) {
+                if (G.hashtableedge[u][visited[m]] != nullptr) {
+                    if (dis[visited[m]] + G.hashtableedge[u][visited[m]]->weight < dis[u]) {
+                        dis[u] = dis[visited[m]] + G.hashtableedge[u][visited[m]]->weight;
+                        findconnectednode = true;
+                    }
+                }
+            }
+                target ++;
+            }while(!findconnectednode && target < q.size());// break when find the node or none node can add to the path
+            if (target > q.size()) {
+                break;
+            }
+            else{
+                visited.push_back(u);
+                cout<<"add "<<u;
+                q.erase(q.begin()+target -1);
+            }
+        }
+        if(!q.empty()){
+    do {
+            
+    vector<int> neighbordis;
+    vector<int> neighborid;
+    newneighbor = false;
+    for (int k = j+1; k< G.hashtableedge[j].size(); k++) {
+        
+        if (G.hashtableedge[j][k]!=nullptr &&  !check[k]){// if k still in unexplore list, then do
+            if (dis[k]>dis[j] + G.hashtableedge[j][k]->weight) {//push all neighbor has less distance in vector
+                dis[k] = dis[j] + G.hashtableedge[j][k]->weight;
+                neighborid.push_back(k);
+                neighbordis.push_back(G.hashtableedge[j][k]->weight);
+                newneighbor = true;
+            }
+        }
+    }
+        if (newneighbor) {// if newneighbor is added
+            
+        
+        int leastid = neighborid[0];
+        int leastdis = neighbordis[0];
+        for (int l = 1; l < neighborid.size(); l++) {
+            if (leastdis > neighbordis[l]) {// find leastdis neighbor
+                leastdis = neighbordis[l];
+                leastid = neighborid[l];
+            }
+        }
+        visited.push_back(leastid);//make the leastid visited
+            cout<<"add "<<leastid;
+            int temp = 0;
+            for (temp = 0; temp < q.size(); temp++) {
+                if (q[temp] == leastid) {
+                    break;
+                }
+            }
+        q.erase(q.begin()+temp);
+        index2++;
+        j = leastid;
+        check[j] = true;
+        }
+    }while (newneighbor);// if new neighbor added, explore new neighbor
+    }
+    }
+    printf("Vertex Distance from Source\n");
+    result = dis[0];
+    for (int i = 0; i < visited.size(); ++i){
+         printf("%d \t\t %d\n", visited[i], dis[visited[i]]);
+        if (result < dis[visited[i]]) {
+            result = dis[visited[i]];
+        }
+        
+    }
+       
+    return result;
 };
 
 
