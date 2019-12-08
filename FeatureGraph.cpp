@@ -9,6 +9,8 @@ using namespace std;
 
 FeatureGraph::FeatureGraph(int N, int d, vector<Node> nodes, vector<Edge> edges) {
     //TODO
+    sizeskill = d;
+    nnode = N;
     for (int i = 0; i < N; i++) {
         insert(nodes[i]);
     }

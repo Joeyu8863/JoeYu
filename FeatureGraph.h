@@ -29,7 +29,7 @@ public:
     
     int nnode;
     int nedge;
-    int sizenode;
+    int sizeskill;
     vector<Node*> hashtable;
     vector<vector<Edge*>> hashtableedge;
     
