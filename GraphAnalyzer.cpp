@@ -98,18 +98,31 @@ float GraphAnalyzer::openClosedTriangleRatio() {
 
 string GraphAnalyzer::topKOpenTriangles(int k) {
     //TODO
-    string list= "";/*
+  string list= "";
+    if (openlist.empty()) {
+        list += "there is no open triangle in the list";
+    }
+    else{
+       
     for (int i =0; i<k; i++) {
-        list += (char)(i+1);
+        /*string temp1 = to_string(openlist.top().id1);
+        cout<<temp1<<"temp1\n";
+        int temp2= openlist.top().id2;
+        cout<<temp2<<"twmp2\n";
+        int temp3 = openlist.top().id3;
+        cout<<temp3<<"temp3\n";*/
+        list += to_string(i + 1);
         list += " open triangle is: ";
-        list += (char)openlist.top().id1;
+        list += to_string(openlist.top().id1);
         list += " ";
-        list += (char)openlist.top().id2;
+        list += to_string(openlist.top().id1);
         list += " ";
-        list += (char)openlist.top().id3;
+        list += to_string(openlist.top().id1);
         list += "\n";
         openlist.pop();
-    }*/
+    }
+        
+    }
     return list;
 };
 
