@@ -6,35 +6,7 @@ using namespace std;
 void GraphAnalyzer::insert(Node n) {
     G.insert(n);
     // TODO Adjust calculations for ratio of open triangles and topKtriangles
-    // i think i misunderstood this, ignore for now
-    /*
-    //if node is in a triangle (is connected to another node that is connected to another node) is closed if third node also connects to new node
-    if(!G.hashtableedge[n.id].empty()){ //left check
-      for(int i = 0; i < G.hashtableedge[n.id].size(); i++){
-        if(G.hashtableedge[n.id][i]!=nullptr && G.hashtable[G.hashtableedge[n.id][i]->IdB]!=nullptr){
-          //at this stage, we know an edge points from node to another node. now check if other node has any edges that point from/to it. know other node exists
-          int node2id = G.hashtableedge[n.id][i]->IdB;
-          for(int j = 0; j < G.hashtableedge[node2id].size(); j++){//left/left check
-            if(G.hashtableedge[node2id][j]!=nullptr && G.hashtable[G.hashtableedge[node2id][j]->IdB]!=nullptr){
-              int node3id = G.hashtableedge[node2id][j]->IdB;
-              //triangle of new node - other node - this node exists, check if closed
-              if(G.hashtableedge[G.hashtable[G.hashtableedge[n.id][i]->IdB][j]].id][n.id]!=nullptr){//close check
-                closed+=1;
-              }
-              else{
-                openlist.
-              }
-            }
-          }
-        }
-      }
-    }
-    for(int i = 0; i < G.hashtableedge.size(); i++){ //right check
-      for(int j = 0; j < G.hashtableedge[i].size(); j++){
-      
-      }
-    }
-    */
+
 };
 
 void GraphAnalyzer::insert(Edge e) {
@@ -157,13 +129,13 @@ int GraphAnalyzer::diameter() {
 
 float GraphAnalyzer::openClosedTriangleRatio() {
     //TODO
-    /*
     open =0.0;
     close=0.0;
     int index = 0;
     int size = G.nnode;
     vector<Triangle> trilist;
-    trilist.resize(size*size*size);
+    trilist.resize(size*(size-1)*(size-1));
+    if(modify){
     for (int i=0 ; i<G.hashtable.size(); i++) {
         for (int j = 0; j < G.hashtableedge[i].size(); j++) {
              if (G.hashtableedge[i][j] != nullptr)
@@ -172,37 +144,41 @@ float GraphAnalyzer::openClosedTriangleRatio() {
                  for (int k = 0; k < G.hashtableedge[j].size(); k++) {
                      if (G.hashtableedge[j][k] != nullptr && k != i)
                      {
+
                          bool add = true;
                          weight += G.hashtableedge[j][k]->weight;
                          for (int l = 0; l < G.hashtableedge[k].size(); l++) {
                              
                              if (G.hashtableedge[k][l] != nullptr && l != j) {
-                               if ((G.hashtableedge[k][l]->IdA == i ||G.hashtableedge[k][l]->IdB == i) && !triangleexist(i, j, k, trilist)) {
-                                 close += 1.0;
-                                 add = false;
-                                 weight +=G.hashtableedge[k][l]->weight;
-                                 Triangle *temp = new Triangle(i,j,k,weight);
-                                 trilist[index]=*temp;
-                                 index++;
-                               }
-                             }
+                         if ((G.hashtableedge[k][l]->IdA == i ||G.hashtableedge[k][l]->IdB == i) && !triangleexist(i, j, k, trilist)) {
+                             close += 1.0;
+                             add = false;
+                             weight +=G.hashtableedge[k][l]->weight;
+                             Triangle *temp = new Triangle(i,j,k,weight);
+                             trilist[index]=*temp;
+                             index++;
+                            
+                            
                          }
+                             }}
                          if(add && !triangleexist(i, j, k,trilist)){
                              open += 1.0;
-                             Triangle* tmp = new Triangle(i,j,k,weight);
-                             cout<<index<<"\n";
-                             trilist[index]=*tmp;
+                             Triangle *temp = new Triangle(i,j,k,weight);
+                             trilist[index] = *temp;
                              index++;
-                             openlist.emplace(*tmp);
+                             openlist.emplace(*temp); 
+                             
 
-                        }
-                   }
-               }
-            }
+                             }
+                 }
+          
+             }
         }
+        
     }
-    return float(open/close);*/
-    return 0;
+    }
+    }
+    return float(open/(close));
 };
 
 string GraphAnalyzer::topKOpenTriangles(int k) {
@@ -319,8 +295,14 @@ int GraphAnalyzer::topNonNeighbor(int nodeID, vector<float> w) {
 
 
 float GraphAnalyzer::jacardIndexOfTopKNeighborhoods(int nodeAID, int nodeBID, int k, vector<float> w) {
-    vector<int> neighborsA = topKNeighbors(nodeAID, k, w);
-    vector<int> neighborsB = topKNeighbors(nodeBID, k, w);
+    vector<int> neighborsA;
+    vector<int> neighborsB;
+    if(G.hashtable[nodeAID]!=nullptr){
+      neighborsA = topKNeighbors(nodeAID, k, w);
+    }
+    if(G.hashtable[nodeAID]!=nullptr){
+      neighborsB = topKNeighbors(nodeBID, k, w);
+    }
     float jindex = 0.0;
     vector<int> intersect;
     for(int i = 0; i < neighborsA.size(); i++){

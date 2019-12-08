@@ -23,6 +23,8 @@ public:
     priority_queue<Triangle> openlist;
     float open;
     float close;
+    int newid;
+    bool modify;        
 
 
     // Insert given node and corresponding features into graph
