@@ -11,11 +11,11 @@ FeatureGraph::FeatureGraph(int N, int d, vector<Node> nodes, vector<Edge> edges)
     //TODO
     sizeskill = d;
     nnode = N;
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < nodes.size(); i++) {
         insert(nodes[i]);
     }
     cout<<"Nodes inserted\n";
-    for (int j = 0 ; j < d; j++) {
+    for (int j = 0 ; j < edges.szie(); j++) {
         insert(edges[j]);
     }
     cout<<"Edges inserted\n";
