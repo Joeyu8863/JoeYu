@@ -46,7 +46,7 @@ int GraphAnalyzer::diameter() {
     //TODO return the sum of the edge weights of the minimum spanning tree for the graph
        vector<int> dis;
     vector<int> q;
-    int result;
+    int result;/*
     dis.resize(G.hashtable.size()+1);
     bool check[G.hashtable.size()];
     for (int i = 0 ; i < G.hashtable.size(); i++) {
@@ -150,7 +150,7 @@ int GraphAnalyzer::diameter() {
         }
         
     }
-       
+    */
     return result;
 };
 
@@ -258,7 +258,7 @@ vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
             }
          
             float score = 0;//initial score
-            for (int j = 0; j<G.hashtable[id]->features.size(); j++) { // compute the score of neighbor id
+            for (int j = 0; j<G.hashtable[id]->features.size() && j<w.size(); j++) { // compute the score of neighbor id
                 score += w[j]*G.hashtable[id]->features[j];
             }
             if (index<k && score!=0) {// if the list have less than k items just add it
@@ -305,8 +305,8 @@ int GraphAnalyzer::topNonNeighbor(int nodeID, vector<float> w) {
     for(int i = 0; i < G.hashtable.size(); i++){
       if(G.hashtable[i]!=nullptr){
         float currentmax = 0.0;
-        for(int j = 0; j < G.hashtable[i]->features.size(); j++){
-          currentmax+=w[0]*G.hashtable[i]->features[j];
+        for(int j = 0; j < G.hashtable[i]->features.size() && j < w.size(); j++){
+          currentmax+=w[j]*G.hashtable[i]->features[j];
         }
         if(currentmax > max && G.hashtableedge[i][nodeID]==nullptr && G.hashtableedge[nodeID][i]==nullptr){//check all edges between nodeID and i to make sure none exist
           nonneighbor = i;
