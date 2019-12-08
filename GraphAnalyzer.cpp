@@ -72,8 +72,7 @@ void GraphAnalyzer::insert(Edge e) {
 };
 
 int GraphAnalyzer::diameter() {
-    //TODO
-    /*vector<int> dis;
+      vector<int> dis;
     vector<int> q;
     int result;
     dis.resize(G.hashtable.size()+1);
@@ -86,7 +85,7 @@ int GraphAnalyzer::diameter() {
         }
     }
     for (int i = q[0]; i < q.size(); i++) {//set distance to infinity
-        dis[q[i]] = 2147483647;
+        dis[q[i]] = INT8_MAX;
     }
     vector<int> visited;
     int j = 0;
@@ -108,6 +107,7 @@ int GraphAnalyzer::diameter() {
             do{
                 u = q[0+target];
             for (int m = 0; m < visited.size(); m++) {
+                cout<<u<<" "<<visited[m]<<" ?\n";
                 if (G.hashtableedge[u][visited[m]] != nullptr) {
                     if (dis[visited[m]] + G.hashtableedge[u][visited[m]]->weight < dis[u]) {
                         dis[u] = dis[visited[m]] + G.hashtableedge[u][visited[m]]->weight;
@@ -127,18 +127,23 @@ int GraphAnalyzer::diameter() {
             }
         }
         if(!q.empty()){
+            int secondleast = INT8_MAX;
+            int originalnodeid = INT8_MAX;
     do {
             
     vector<int> neighbordis;
     vector<int> neighborid;
     newneighbor = false;
+        int dispass = 0;
     for (int k = j+1; k< G.hashtableedge[j].size(); k++) {
         
         if (G.hashtableedge[j][k]!=nullptr &&  !check[k]){// if k still in unexplore list, then do
+            cout<<k<<"\n";
             if (dis[k]>dis[j] + G.hashtableedge[j][k]->weight) {//push all neighbor has less distance in vector
-                dis[k] = dis[j] + G.hashtableedge[j][k]->weight;
+                cout<<j<<" "<<k<<" "<<"\n";
+                dispass = dis[j] + G.hashtableedge[j][k]->weight;
                 neighborid.push_back(k);
-                neighbordis.push_back(G.hashtableedge[j][k]->weight);
+                neighbordis.push_back(dispass);
                 newneighbor = true;
             }
         }
@@ -153,19 +158,39 @@ int GraphAnalyzer::diameter() {
                 leastdis = neighbordis[l];
                 leastid = neighborid[l];
             }
+            
         }
+            if (secondleast>=leastdis) {
+            
+            for (int l = 1; l < neighborid.size(); l++) {
+                if (secondleast>neighbordis[l] && neighbordis[l]>=leastdis) {
+                    secondleast = neighbordis[l];
+                    cout<<"new secondleast"<<secondleast;
+                }
+            }
         visited.push_back(leastid);//make the leastid visited
-            cout<<"add "<<leastid;
+            cout<<newneighbor<<"add :"<<leastid<<"\n";
+            cout<<leastid<<" old dis: "<<dis[leastid]<<"\n";
+            dis[leastid] = dispass;
+            cout<<leastid<<" has new dis: "<<dis[leastid]<<"\n";
             int temp = 0;
             for (temp = 0; temp < q.size(); temp++) {
                 if (q[temp] == leastid) {
                     break;
                 }
             }
+                originalnodeid=j;
         q.erase(q.begin()+temp);
         index2++;
         j = leastid;
+            cout<<j<<" j \n";
         check[j] = true;
+            }
+            else{
+                j = originalnodeid;
+                cout<<" go to check original node "<<j <<"\n";
+            }
+                
         }
     }while (newneighbor);// if new neighbor added, explore new neighbor
     }
@@ -180,8 +205,7 @@ int GraphAnalyzer::diameter() {
         
     }
        
-    return result;*/
-    return 0;
+    return result;
 };
 
 
