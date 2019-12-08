@@ -260,6 +260,10 @@ float GraphAnalyzer::openClosedTriangleRatio() {
     }
     }
     }
+    if (close ==0) {
+        return -1;
+    }
+    else
     return float(open/(close));
 }
 ;
@@ -279,14 +283,12 @@ string GraphAnalyzer::topKOpenTriangles(int k) {
         cout<<temp2<<"twmp2\n";
         int temp3 = openlist.top().id3;
         cout<<temp3<<"temp3\n";*/
-        list += to_string(i + 1);
-        list += " open triangle is: ";
         list += to_string(openlist.top().id1);
-        list += " ";
-        list += to_string(openlist.top().id1);
-        list += " ";
-        list += to_string(openlist.top().id1);
-        list += "\n";
+        list += ",";
+        list += to_string(openlist.top().id2);
+        list += ",";
+        list += to_string(openlist.top().id3);
+        list += ";";
         openlist.pop();
     }
         
