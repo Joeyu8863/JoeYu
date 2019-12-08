@@ -211,13 +211,11 @@ int GraphAnalyzer::diameter() {
 
 float GraphAnalyzer::openClosedTriangleRatio() {
     //TODO
-    open =0.0;
-    close=0.0;
-    int index = 0;
+ int index = 0;
     int size = G.nnode;
     vector<Triangle> trilist;
     trilist.resize(size*(size-1)*(size-1));
-    if(modify){
+    if(!modify){
     for (int i=0 ; i<G.hashtable.size(); i++) {
         for (int j = 0; j < G.hashtableedge[i].size(); j++) {
              if (G.hashtableedge[i][j] != nullptr)
@@ -239,6 +237,7 @@ float GraphAnalyzer::openClosedTriangleRatio() {
                              Triangle *temp = new Triangle(i,j,k,weight);
                              trilist[index]=*temp;
                              index++;
+                             cout<<"add close triangle :"<<i<<" "<<j<<" "<<k<<"\n";
                             
                             
                          }
@@ -248,7 +247,8 @@ float GraphAnalyzer::openClosedTriangleRatio() {
                              Triangle *temp = new Triangle(i,j,k,weight);
                              trilist[index] = *temp;
                              index++;
-                             openlist.emplace(*temp); 
+                             openlist.emplace(*temp);
+                             cout<<"add open triangle :"<<i<<" "<<j<<" "<<k<<"\n";
                              
 
                              }
@@ -260,6 +260,7 @@ float GraphAnalyzer::openClosedTriangleRatio() {
     }
     }
     }
+    cout<<"open: "<<open<<"close: "<<close<<"\n";
     if (close ==0) {
         return -1;
     }
