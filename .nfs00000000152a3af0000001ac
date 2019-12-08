@@ -43,20 +43,19 @@ void GraphAnalyzer::insert(Edge e) {
 };
 
 int GraphAnalyzer::diameter() {
-    //TODO return the sum of the edge weights of the minimum spanning tree for the graph
+    //TODO
     return 2;
 };
 
 
 float GraphAnalyzer::openClosedTriangleRatio() {
     //TODO
-    /*
     open =0.0;
     close=0.0;
     int index = 0;
     int size = G.nnode;
     vector<Triangle> trilist;
-    trilist.resize(size*size*size);
+    trilist.resize(size*(size-1)*(size-1));
     for (int i=0 ; i<G.hashtable.size(); i++) {
         for (int j = 0; j < G.hashtableedge[i].size(); j++) {
              if (G.hashtableedge[i][j] != nullptr)
@@ -82,11 +81,10 @@ float GraphAnalyzer::openClosedTriangleRatio() {
                          }
                          if(add && !triangleexist(i, j, k,trilist)){
                              open += 1.0;
-                             Triangle* tmp = new Triangle(i,j,k,weight);
-                             cout<<index<<"\n";
-                             trilist[index]=*tmp;
+                             Triangle *temp = new Triangle(i,j,k,weight);
+                             trilist[index]=*temp;
                              index++;
-                             openlist.emplace(*tmp);
+                             openlist.emplace(*temp);
 
                         }
                    }
@@ -94,7 +92,7 @@ float GraphAnalyzer::openClosedTriangleRatio() {
             }
         }
     }
-    return float(open/close);*/
+    return float(open/(close));
     return 0;
 };
 
@@ -102,7 +100,7 @@ string GraphAnalyzer::topKOpenTriangles(int k) {
     //TODO
   string list= "";
     if (openlist.empty()) {
-        list += "there is no open triangle in the list";
+        list += "There are no open triangles";
     }
     else{
        
@@ -142,16 +140,16 @@ vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
         if (G.hashtableedge[nodeID][i] != nullptr){
         if (G.hashtableedge[nodeID][i]->IdA == nodeID) {// if ida in the edge is nodeid, then idb is the search target
             id = G.hashtableedge[nodeID][i]->IdB;
-            cout<<G.hashtableedge[nodeID][i]->IdB<<"\n";
+            //cout<<G.hashtableedge[nodeID][i]->IdB<<"\n";
         }
         else if (G.hashtableedge[nodeID][i]->IdB == nodeID){// if idb in the edge is nodeid, then idb is the search target
             id = G.hashtableedge[nodeID][i]->IdA;
-            cout<<G.hashtableedge[nodeID][i]->IdA<<"\n";
+            //cout<<G.hashtableedge[nodeID][i]->IdA<<"\n";
             
             }
          
             float score = 0;//initial score
-            for (int j = 0; j<G.hashtable[id]->features.size(); j++) { // compute the score of neighbor id
+            for (int j = 0; j<2; j++) { // compute the score of neighbor id
                 score += w[j]*G.hashtable[id]->features[j];
             }
             if (index<k && score!=0) {// if the list have less than k items just add it
@@ -178,7 +176,7 @@ vector<int> GraphAnalyzer::topKNeighbors(int nodeID, int k,  vector<float> w) {
     int size = 0;
     if (k>index) { // take the min of k & neighbors
         size = index;
-        cout<<"This node only has "<< index<<" neighbors"<<"\n";
+        cout<<"This node only has "<< index<<" neighbors, not "<<k<<"\n";
     }
     else{
         size = k;
@@ -198,9 +196,8 @@ int GraphAnalyzer::topNonNeighbor(int nodeID, vector<float> w) {
     for(int i = 0; i < G.hashtable.size(); i++){
       if(G.hashtable[i]!=nullptr){
         float currentmax = 0.0;
-        for(int j = 0; j < G.hashtable[i]->features.size(); j++){
-          currentmax+=w[0]*G.hashtable[i]->features[j];
-        }
+        currentmax+=w[0]*G.hashtable[i]->features[0];
+        currentmax+=w[1]*G.hashtable[i]->features[1];
         if(currentmax > max && G.hashtableedge[i][nodeID]==nullptr && G.hashtableedge[nodeID][i]==nullptr){//check all edges between nodeID and i to make sure none exist
           nonneighbor = i;
           max = currentmax;
